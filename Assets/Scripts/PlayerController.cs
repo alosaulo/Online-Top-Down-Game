@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -14,15 +15,13 @@ public class PlayerController : MonoBehaviour
     public float health;
     public float maxHealth;
 
-    public int playerNumber;
-
     public float speed;
 
     public float atkDelay;
     
     public float countAtkDelay;
 
-    Rigidbody2D rigidbody2D;
+    Rigidbody2D rb2D;
 
     Animator animator;
 
@@ -32,15 +31,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        hAxis = Input.GetAxis("HorizontalP" + playerNumber);
-        vAxis = Input.GetAxis("VerticalP" + playerNumber);
+        hAxis = Input.GetAxis("Horizontal");
+        vAxis = Input.GetAxis("Vertical");
 
         if (Mathf.Abs(hAxis) >= 0.000000001) {
             lastX = hAxis;
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         if (countAtkDelay > atkDelay)
         {
-            if (Input.GetButtonDown("Fire1P"+playerNumber))
+            if (Input.GetButtonDown("Fire1"))
             {
                 countAtkDelay = 0;
                 if (lastX > 0)
@@ -93,7 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 newPos = new Vector2(hAxis, vAxis).normalized * speed * Time.fixedDeltaTime;
         if(knockback == false) { 
-            rigidbody2D.velocity = newPos;
+            rb2D.velocity = newPos;
         
             animator.SetFloat("Y", lastY);
 
@@ -135,7 +134,7 @@ public class PlayerController : MonoBehaviour
         knockback = true;
         Vector2 dir = transform.position - pos;
         Debug.DrawRay(pos,dir,Color.magenta,3);
-        rigidbody2D.AddForce(dir * 100);
+        rb2D.AddForce(dir * 100);
     }
 
 }

@@ -8995,7 +8995,6 @@ MonoBehaviour:
   playerLifeImg: {fileID: 1745226532}
   health: 10
   maxHealth: 10
-  playerNumber: 2
   speed: 100
   atkDelay: 2
   countAtkDelay: 0
